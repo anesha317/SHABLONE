@@ -562,39 +562,4 @@ document.addEventListener('DOMContentLoaded', () => {
       );
     });
 
-  blobs.forEach(blob => {
-    const moveDuration = 2 + Math.random() * 2;  // быстрое движение
-    const rotateDuration = 2 + Math.random() * 3000; // чуть дольше, чтобы красиво
-
-    const x = (Math.random() - 200) * 140;
-    const y = (Math.random() - 2) * 140;
-
-    // движение
-    blob.animate(
-      [
-        { transform: 'translate(0px,0px)' },
-        { transform: `translate(${x}px, ${y}px)` }
-      ],
-      {
-        duration: moveDuration,
-        easing: 'ease-in-out',
-        direction: 'alternate',
-        iterations: Infinity
-      }
-    );
-
-    // вращение
-    blob.animate(
-      [
-        { transform: 'rotate(0deg)' },
-        { transform: 'rotate(360deg)' }
-      ],
-      {
-        duration: rotateDuration,
-        easing: 'linear',
-        iterations: Infinity
-      }
-    );
-  });
-});
-</script>
+ 
