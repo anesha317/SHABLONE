@@ -1,0 +1,744 @@
+/* ===========================
+   Modern Web Template — style.css
+   Полный, подробный CSS файл для демонстрационного шаблона.
+   Комментарии и детальные правила включены для удобства чтения и последующего редактирования.
+   =========================== */
+
+/* ---------------------------
+   Root variables — цвета, размеры, общие настройки
+   --------------------------- */
+:root{
+  /* --- базовая палитра --- */
+  --bg: #06060a; /* очень тёмный фон — основной */
+  --card-bg: rgba(255,255,255,0.04); /* лёгкая заливка для карточек */
+  --glass-border: rgba(255,255,255,0.06); /* тонкая граница glass */
+  --text: rgba(255,255,255,0.96); /* основной текст */
+  --muted: rgba(255,255,255,0.7); /* вторичный текст */
+  --white: #ffffff;
+
+  /* --- акцентный розовый (тёплый, вариант A, яркость 2: мягкий, читаемый) --- */
+  --accent-pink-1: 345 80% 68%; /* H S L в формате H S% L% (используем HSL через CSS color functions) */
+  /* Для удобства используем hsla через calc/concatenation в modern browsers. */
+
+  /* --- глобальные размеры --- */
+  --glass-blur: 12px;
+  --radius-lg: 18px;
+  --radius-sm: 10px;
+  --max-width: 1200px;
+
+  /* --- тени и эффекты --- */
+  --shadow-strong: 0 10px 40px rgba(0,0,0,0.65);
+  --soft-glow: 0 8px 36px rgba(255, 175, 195, 0.06); /* лёгкий розовый glow — будет усиляться на акцентах */
+
+  /* --- типографика --- */
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+}
+
+/* ---------------------------
+   Базовые правила и reset
+   --------------------------- */
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:var(--font-sans);
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.45;
+  /* убираем overflow:hidden чтобы позволить прокрутку */
+  overflow-x:hidden;
+  /* небольшая система безопасности для масштабируемости */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* helper: контейнер, чтобы ограничить контент по ширине */
+.container{
+  width: min(95%, var(--max-width));
+  margin: 0 auto;
+}
+
+/* утилитарные классы */
+.sr-only{
+  position:absolute!important;
+  height:1px;width:1px;
+  overflow:hidden;clip:rect(1px,1px,1px,1px);
+  white-space:nowrap;border:0;padding:0;margin:-1px;
+}
+
+/* ---------------------------
+   Бэкграунд — анимированный градиент и плавающие шарики (blobs)
+   --------------------------- */
+
+/* Фоновый анимированный gradient — расположен фиксированно и перекрывает всю страницу */
+.bg-gradient{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  /* два радиальных слоя с розовыми тонами: мягкие, размытые */
+  background:
+    radial-gradient(1200px 400px at 10% 20%, hsla(var(--accent-pink-1) / .11), transparent 12%),
+    radial-gradient(900px 350px at 90% 80%, hsla(var(--accent-pink-1) / .08), transparent 15%),
+    linear-gradient(180deg, rgba(0,0,0,0.40), rgba(0,0,0,0.75));
+  mix-blend-mode: screen;
+  filter: blur(30px) saturate(120%);
+  opacity:1;
+  animation: bgShift 28s linear infinite;
+}
+
+/* анимация с медленным смещением (делает фон "живым") */
+@keyframes bgShift{
+  0%{ transform: translateY(0) rotate(0deg) scale(1); }
+  25%{ transform: translateY(-3%) rotate(0.5deg) scale(1.02); }
+  50%{ transform: translateY(-6%) rotate(1deg) scale(1.03); }
+  75%{ transform: translateY(-3%) rotate(0.5deg) scale(1.02); }
+  100%{ transform: translateY(0) rotate(0deg) scale(1); }
+}
+
+/* Контейнер для blob'ов (плавающих размытых шаров) */
+#blobs{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  overflow:hidden;
+}
+
+/* Базовый стиль одного blob */
+.blob{
+  position:absolute;
+  border-radius:50%;
+  filter: blur(26px);
+  opacity:.92;
+  mix-blend-mode: screen;
+  transform: translate3d(0,0,0);
+  will-change: transform;
+  transition: opacity .6s ease;
+}
+
+/* Варианты blob — все розовые в разных степенях прозрачности и радиальных градиентах */
+.blob.b1{
+  width: calc(18vmin + 40px);
+  height: calc(18vmin + 40px);
+  left:6%;
+  top:10%;
+  background: radial-gradient(circle at 30% 30%, hsla(var(--accent-pink-1) / .44), rgba(255,255,255,0) 40%);
+}
+.blob.b2{
+  width: calc(22vmin + 20px);
+  height: calc(22vmin + 20px);
+  right:6%;
+  top:24%;
+  background: radial-gradient(circle at 60% 40%, hsla(var(--accent-pink-1) / .36), rgba(255,255,255,0) 42%);
+}
+.blob.b3{
+  width: calc(15vmin + 32px);
+  height: calc(15vmin + 32px);
+  left:28%;
+  bottom:8%;
+  background: radial-gradient(circle at 40% 60%, hsla(var(--accent-pink-1) / .30), rgba(255,255,255,0) 45%);
+}
+.blob.b4{
+  width: calc(20vmin + 10px);
+  height: calc(20vmin + 10px);
+  right:26%;
+  bottom:22%;
+  background: radial-gradient(circle at 60% 30%, hsla(var(--accent-pink-1) / .32), rgba(255,255,255,0) 45%);
+}
+.blob.b5{
+  width: calc(12vmin + 24px);
+  height: calc(12vmin + 24px);
+  left:50%;
+  top:5%;
+  background: radial-gradient(circle at 50% 50%, hsla(var(--accent-pink-1) / .28), rgba(255,255,255,0) 45%);
+}
+
+/* Плавное вертикальное движение blob'ов */
+@keyframes floatBlob {
+  0%{ transform: translateY(-6vh) rotate(0); }
+  50%{ transform: translateY(6vh) rotate(3deg); }
+  100%{ transform: translateY(-6vh) rotate(0); }
+}
+
+/* ---------------------------
+   HERO — структура карточки, топбар, заголовки, действия
+   --------------------------- */
+.hero{
+  position:relative;
+  z-index:2;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 6vh 4vw;
+}
+
+/* Glass card — центральная панель с эффектом размытия */
+.glass-card{
+  width: min(var(--max-width), 94vw);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  border: 1px solid var(--glass-border);
+  padding: clamp(20px, 4vw, 44px);
+  backdrop-filter: blur(var(--glass-blur)) saturate(1.05);
+  box-shadow: var(--shadow-strong), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* TOPBAR — логотип, навигация и бургер */
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom: clamp(12px, 2.4vw, 22px);
+}
+
+/* Логотип — простой текстовый, но с акцентом */
+.logo{
+  font-weight:800;
+  letter-spacing: 0.6px;
+  font-size: clamp(14px, 1.6vw, 18px);
+  color:var(--text);
+}
+.logo-dot{
+  color: hsl(var(--accent-pink-1));
+  margin-left:6px;
+}
+
+/* Навигация — горизонтальная, скрывается на мобилках */
+.nav{ list-style:none; display:flex; gap:18px; margin:0; padding:0; align-items:center; }
+.nav a{
+  color:var(--muted);
+  text-decoration:none;
+  font-weight:600;
+  font-size:14px;
+  padding:6px 8px;
+  border-radius:8px;
+  transition: all .22s ease;
+}
+.nav a:hover, .nav a:focus{ color:var(--white); transform: translateY(-2px); }
+
+/* Бургер-иконка — видно на мобильных */
+.burger{
+  display:none; /* по умолчанию скрыт, будет показан на маленьких экранах */
+  background:transparent;
+  border:0;
+  padding:8px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.burger-line{
+  display:block;
+  width:20px;
+  height:2px;
+  margin:4px 0;
+  background:rgba(255,255,255,0.14);
+  border-radius:2px;
+}
+
+/* HERO - основной контент */
+.hero-main{
+  display:grid;
+  gap:18px;
+  align-items:center;
+  text-align:center;
+  padding: clamp(8px, 3vw, 44px);
+}
+.title{
+  margin:0;
+  font-size: clamp(28px, 6vw, 56px);
+  line-height:1.02;
+  letter-spacing:-0.01em;
+  font-weight:900;
+  color:var(--text);
+  text-shadow: 0 8px 36px rgba(0,0,0,0.55);
+}
+.subtitle{
+  margin:0;
+  color:var(--muted);
+  font-size: clamp(14px, 2.6vw, 18px);
+  max-width:900px;
+  margin-inline:auto;
+}
+.hero-note{
+  margin:0;
+  color: rgba(255,255,255,0.78);
+  font-size:13px;
+  max-width:880px;
+  margin-inline:auto;
+}
+
+/* ACTIONS — кнопки */
+.actions{
+  display:flex;
+  gap:14px;
+  justify-content:center;
+  margin-top:8px;
+  flex-wrap:wrap;
+}
+
+/* Базовый стиль кнопки */
+.btn{
+  --btn-bg: rgba(255,255,255,0.06);
+  --btn-border: rgba(255,255,255,0.06);
+  padding: 12px 22px;
+  border-radius: 12px;
+  border: 1px solid var(--btn-border);
+  background: var(--btn-bg);
+  color: var(--text);
+  font-weight:700;
+  font-size:15px;
+  cursor:pointer;
+  transition: all .32s cubic-bezier(.2,.9,.2,1);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+}
+
+/* маленькая кнопка (в футере) */
+.btn.small{ padding:8px 12px; border-radius:10px; font-size:13px; }
+
+/* PRIMARY button — с акцентом (легкий розовый градиент и мягкий glow) */
+.btn.primary{
+  background: linear-gradient(90deg, hsla(var(--accent-pink-1) / .22), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  color:var(--text);
+  box-shadow: var(--soft-glow), 0 8px 28px rgba(0,0,0,0.6);
+  position:relative;
+  overflow:visible;
+}
+
+/* GHOST button — менее заметная, используемая как вторичная CTA */
+.btn.ghost{
+  background: rgba(255,255,255,0.02);
+  color:var(--muted);
+}
+
+/* --- Hover эффект по требованию: кнопка становится прозрачной + меняет бордер (и лёгкое смещение) --- */
+.btn:hover, .btn:focus{
+  background: transparent;
+  color: var(--text);
+  border: 1px solid rgba(255,255,255,0.14);
+  box-shadow: 0 12px 40px rgba(255, 180, 200, 0.06), 0 1px 0 rgba(255,255,255,0.02);
+  transform: translateY(-6px);
+  outline: none;
+}
+
+/* мягкая анимация "флэша" на primary — едва заметный pulsing glow */
+@keyframes pulseGlow {
+  0%{ box-shadow: var(--soft-glow) }
+  50%{ box-shadow: 0 20px 80px rgba(255, 160, 190, 0.08) }
+  100%{ box-shadow: var(--soft-glow) }
+}
+.btn.primary{ animation: pulseGlow 12s ease-in-out infinite; }
+
+/* META футер в карточке (маленький) */
+.meta{
+  display:flex;
+  gap:18px;
+  color:var(--muted);
+  margin-top:18px;
+  font-size:13px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+
+/* ---------------------------
+   STORY — большая текстовая секция (под hero)
+   --------------------------- */
+.story{
+  position:relative;
+  z-index:2;
+  padding: clamp(40px, 8vw, 108px) 0;
+  margin-top: 0;
+}
+.story-card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.02);
+  border-radius: 14px;
+  padding: clamp(24px, 3.6vw, 46px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+}
+.story-title{
+  font-size: clamp(20px, 4vw, 36px);
+  margin:0 0 12px 0;
+  color:var(--text);
+  font-weight:800;
+  line-height:1.05;
+}
+.story-lead{
+  margin:0 0 14px 0;
+  color:var(--muted);
+  font-weight:600;
+  font-size: clamp(15px, 2.6vw, 18px);
+}
+.story-body{
+  margin:0 0 18px 0;
+  color: rgba(255,255,255,0.9);
+  font-size:15px;
+}
+.story-list{ margin: 0 0 18px 1.2rem; color:var(--muted) }
+.story-list li{ margin:8px 0 }
+.story-extra{ margin-top:16px; color: rgba(255,255,255,0.86); line-height:1.6; }
+
+/* ---------------------------
+   FEATURES — карточки фич / преимуществ (3 колонки)
+   Карточки — glass + лёгкий glow
+   --------------------------- */
+.features{
+  position:relative;
+  z-index:2;
+  padding: clamp(28px, 5vw, 80px) 0;
+}
+.features-heading{
+  margin:0 0 8px 0;
+  font-size: clamp(18px, 3.4vw, 28px);
+  font-weight:800;
+  color:var(--text);
+}
+.features-sub{ margin:0 0 24px 0; color:var(--muted) }
+
+/* карточки: сетка 3 колонки на десктопе */
+.cards{
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap:22px;
+  align-items:start;
+}
+
+/* отдельная карточка */
+.card{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.012));
+  border-radius: 14px;
+  padding: clamp(18px, 2.4vw, 28px);
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.6), 0 2px 8px rgba(255,255,255,0.02) inset;
+  transition: transform .28s cubic-bezier(.2,.9,.2,1), box-shadow .28s;
+  backdrop-filter: blur(8px);
+  position:relative;
+  overflow:hidden;
+}
+
+/* карточка — hover: лёгкое поднятие и glow */
+.card:focus, .card:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.72), 0 10px 60px rgba(255, 160, 190, 0.06);
+  border-color: rgba(255,255,255,0.06);
+}
+
+/* иконка в карточке */
+.card-icon{
+  width:52px;
+  height:52px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:22px;
+  background: linear-gradient(180deg, hsla(var(--accent-pink-1) / .20), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.04);
+  margin-bottom:12px;
+  box-shadow: 0 8px 28px rgba(255,160,190,0.04);
+}
+
+/* заголовок карточки */
+.card-title{
+  margin:0 0 8px 0;
+  font-size:18px;
+  font-weight:800;
+}
+.card-desc{
+  margin:0 0 12px 0;
+  color:var(--muted);
+  font-size:14px;
+}
+.card-more{
+  margin:0 0 14px 0;
+  color: rgba(255,255,255,0.86);
+  font-size:13px;
+  line-height:1.5;
+}
+.card-cta{
+  text-decoration:none;
+  color:var(--white);
+  font-weight:700;
+  font-size:14px;
+  display:inline-block;
+  padding:8px 10px;
+  border-radius:10px;
+  background: linear-gradient(90deg, hsla(var(--accent-pink-1) / .18), rgba(255,255,255,0.02));
+  border:1px solid rgba(255,255,255,0.06);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card-cta:hover{ transform: translateY(-4px); box-shadow: 0 12px 40px rgba(255,160,190,0.06); }
+
+/* ---------------------------
+   Footer — контакты и подписка
+   --------------------------- */
+.footer{
+  padding: clamp(24px, 4vw, 40px) 0;
+  border-top: 1px solid rgba(255,255,255,0.02);
+  margin-top: 30px;
+}
+.footer-grid{
+  display:flex;
+  gap:18px;
+  justify-content:space-between;
+  align-items:flex-start;
+  flex-wrap:wrap;
+}
+.footer-block{ flex:1 1 220px; margin-bottom:12px; color:var(--muted) }
+.footer-block h4{ margin:0 0 8px 0; color:var(--white); font-size:16px; }
+.subscribe{ display:flex; gap:8px; align-items:center; }
+.subscribe-input{
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.04);
+  background: rgba(255,255,255,0.02);
+  color:var(--text);
+  min-width:180px;
+}
+
+/* copyright */
+.copyright{ margin-top:18px; color:var(--muted); font-size:13px }
+
+/* ---------------------------
+   RESPONSIVE — адаптация для мобильных и планшетов
+   Много правил чтобы на телефоне было красиво и быстро.
+   --------------------------- */
+@media (max-width: 980px){
+  .cards{ grid-template-columns: repeat(2, 1fr); gap:18px; }
+}
+
+@media (max-width: 760px){
+  /* Делаем стеклянную карточку более компактной */
+  .glass-card{ padding:18px; border-radius:14px; }
+  .nav{ display:none; } /* скрываем навигацию, показываем бургер */
+  .burger{ display:inline-flex; }
+
+  /* Уменьшаем движения и blur для производительности */
+  :root{ --glass-blur: 8px; }
+
+  /* Заголовки и тексты */
+  .title{ font-size: clamp(22px, 8vw, 36px); }
+  .subtitle{ font-size:14px; }
+  .hero-main{ padding:12px; }
+
+  /* Блоки */
+  .cards{ grid-template-columns: 1fr; gap:14px; }
+
+  /* blob'ы меньше и с меньшим blur */
+  .blob{ filter: blur(18px); opacity:.95; }
+  .blob.b1, .blob.b2, .blob.b3, .blob.b4, .blob.b5{
+    width: calc(28vmin + 0px);
+    height: calc(28vmin + 0px);
+  }
+
+  /* Кнопки: компактные */
+  .btn{ padding:10px 14px; font-size:14px; border-radius:10px; }
+  .btn.primary{ font-weight:800; }
+
+  /* Скрываем некоторые дополнительные блоки визуально, если нужно */
+  .story-extra{ display:block; font-size:14px; }
+}
+
+/* Умные сокращения для очень маленьких экранов */
+@media (max-width: 420px){
+  .glass-card{ padding:12px; border-radius:12px; }
+  .title{ font-size:20px; }
+  .subtitle{ font-size:13px; }
+  .blob{ filter: blur(14px); }
+  .bg-gradient{ filter: blur(20px) saturate(110%); }
+}
+
+/* ---------------------------
+   PREFERS REDUCED MOTION — уважение к пользователю
+   --------------------------- */
+@media (prefers-reduced-motion: reduce){
+  .bg-gradient, .blob, .btn.primary, .card, .glass-card{
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ---------------------------
+   Маленькие вспомогательные улучшения
+   --------------------------- */
+/* Ставим динамическое ограничение ширины для читабельности */
+.story-card, .card{ max-width: 1200px; margin-inline:auto; }
+
+/* Плавный скролл внутри: можно прокручивать страницу плавно */
+html{ scroll-behavior: smooth; }
+
+/* Конец style.css — при необходимости добавлю больше комментариев или разбью на модули */
+   
+
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.insta-link {
+  margin-left: 18px;
+  opacity: .85;
+  transition: .25s;
+}
+.insta-link:hover {
+  opacity: 1;
+  transform: scale(1.08);
+}
+.pricing {
+  padding: 100px 0;
+  position: relative;
+}
+
+.pricing-heading {
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.pricing-sub {
+  text-align: center;
+  opacity: .7;
+  margin-bottom: 50px;
+}
+
+.pricing-grid {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+}
+
+.plan {
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,.03);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 18px;
+  padding: 30px;
+  text-align: center;
+  transition: .3s;
+}
+
+.plan:hover {
+  transform: translateY(-4px);
+}
+
+.plan-title {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.plan-price {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.plan-text {
+  opacity: .75;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* PINK ACCENT FOR PREMIUM */
+.plan-hot {
+  border: 1px solid rgba(255,140,200,.35);
+  box-shadow: 0 0 20px rgba(255,140,200,.25);
+}
+.plan-hot .plan-price {
+  color: rgb(255,165,220);
+}
+html {
+  scroll-behavior: smooth;
+}
+.pricing {
+  padding: 120px 0;
+  text-align: center;
+  position: relative;
+}
+
+.pricing-heading{
+  font-size: 38px;
+  margin-bottom: 8px;
+}
+
+.pricing-sub{
+  opacity:.7;
+  margin-bottom:50px;
+}
+
+.pricing-grid{
+  display:grid;
+  gap:30px;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+}
+
+.plan{
+  backdrop-filter:blur(22px);
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  padding:35px;
+  border-radius:22px;
+  transition:.35s;
+}
+
+.plan:hover{
+  transform:translateY(-6px);
+}
+
+.plan-price{
+  font-size:32px;
+  font-weight:700;
+  margin:10px 0 15px;
+}
+
+.plan-text{
+  opacity:.8;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* нежно розовый акцент */
+.plan-hot{
+  border:1px solid rgba(255,160,200,.35);
+  box-shadow:0 0 25px rgba(255,140,190,.25);
+}
+.plan-hot .plan-price{
+  color:rgb(255,180,220);
+}
+.pricing{padding:140px 0;text-align:center}
+.pricing-title{font-size:42px;margin-bottom:8px}
+.pricing-sub{opacity:.7;margin-bottom:40px}
+
+.pricing-cards{display:flex;gap:30px;justify-content:center;flex-wrap:wrap}
+
+.p-card{
+  width:260px;padding:40px;border-radius:24px;
+  background:rgba(255,255,255,.1);
+  backdrop-filter:blur(20px);
+  border:1px solid rgba(255,255,255,.2);
+}
+
+.p-card.best{background:rgba(255,192,203,.18);border-color:rgba(255,192,203,.4)}
+
+.p-card h3{margin-bottom:6px}
+.p-desc{font-size:14px;opacity:.8;margin-bottom:20px}
+.p-price{font-size:32px;font-weight:700}
+/* HOVER EFFECT for pricing cards */
+.p-card{
+  transition: .35s ease;
+  will-change: transform, box-shadow;
+}
+
+.p-card:hover{
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 25px 60px rgba(255,192,203,.25);
+  border-color: rgba(255,192,203,.5);
+  background: rgba(255,255,255,.18);
+  backdrop-filter: blur(28px);
+}

@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Modern Web Template — Полная демо-страница</title>
+
+  <!-- Подключаем стили -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Резервный шрифт (используем системные, но можно подключить Google Fonts) -->
+  <meta name="description" content="Премиум шаблон — glassmorphism, плавные анимации, адаптивный дизайн. Готово к продаже и кастомизации.">
+</head>
+<script>
+  // ждём пока прогрузится всё
+  window.addEventListener('DOMContentLoaded', () => {
+    const insta = document.querySelector('.insta-fixed');
+    if (!insta) return;
+
+    // создаём элемент почты
+    const mail = document.createElement('a');
+    mail.href = "mailto:aneshaxx@gmail.com";
+    mail.textContent = "aneshaxx@gmail.com";
+    mail.style.position = "fixed";
+    mail.style.top = "50px";
+    mail.style.left = "20px";
+    mail.style.color = "white";
+    mail.style.fontSize = "14px";
+    mail.style.opacity = "0.85";
+    mail.style.zIndex = "9999";
+    mail.style.textDecoration = "none";
+    mail.style.transition = ".3s";
+
+    mail.onmouseenter = () => mail.style.opacity = "1";
+    mail.onmouseleave = () => mail.style.opacity = ".85";
+
+    // вставляем в документ
+    document.body.appendChild(mail);
+  });
+</script>
+
+<body>
+  <!-- Основная обёртка страницы -->
+  <div class="page">
+
+    <!-- 1) Фон: анимированный градиент + плавающие размытые шарики (blobs) -->
+    <div class="bg-gradient" aria-hidden="true"></div>
+    <div id="blobs" aria-hidden="true"></div>
+
+    <!-- 2) Hero: стеклянная карточка с навигацией, заголовком и CTA -->
+    <header class="hero" role="banner" aria-label="Главный экран">
+      <div class="glass-card" role="region" aria-label="Карточка героя">
+        <!-- Topbar -->
+        <nav class="topbar" role="navigation" aria-label="Главное меню">
+          <div class="logo" aria-hidden="true">MODERN<span class="logo-dot">.</span></div>
+
+          <!-- Блок навигации (на мобильном скрывается за иконкой) -->
+          <ul class="nav" role="menubar" aria-hidden="false">
+            <li role="none"><a role="menuitem" href="#features">Фичи</a></li>
+            <li role="none"><a role="menuitem" href="#about">О проекте</a></li>
+            <li role="none"><a role="menuitem" href="#contacts">Контакты</a></li>
+            <li role="none"><a role="menuitem" href="#pricing">Цены</a></li>
+          </ul>
+
+          <!-- Бургер (визуальный, без JS-логики открытия в этой версии) -->
+          <button class="burger" aria-label="Открыть меню" aria-expanded="false">
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+            <span class="burger-line"></span>
+          </button>
+        </nav>
+
+        <!-- Hero content -->
+        <main class="hero-main">
+          <h1 class="title">Modern Web Template</h1>
+
+          <p class="subtitle">
+            Премиум шаблон с эффектом glassmorphism, мягкими анимациями и плавающими визуальными элементами.
+            Создан для тех, кто хочет быстро продавать сайты с профессиональным, масштабируемым оформлением.
+          </p>
+
+          <!-- Секция действий -->
+          <div class="actions">
+            <button class="btn primary" id="buyBtn">Get the Template</button>
+            <button class="btn ghost" id="previewBtn">Preview</button>
+          </div>
+
+          <!-- Небольшой пояснительный текст -->
+          <p class="hero-note">
+            Шаблон адаптивен, оптимизирован для производительности и удобен в кастомизации. Поддержка
+            многостраничных сайтов, простая интеграция с CMS и статическими генераторами. Нажмите «Preview», чтобы
+            увидеть демо более глубоких секций.
+          </p>
+        </main>
+
+        <!-- Footer meta внутри карточки -->
+        <footer class="meta" aria-hidden="false">
+          <div class="meta-item">Responsive · Retina-ready</div>
+          <div class="meta-item">SEO-friendly · Easy to customize</div>
+          <div class="meta-item">Includes animations & accessibility</div>
+        </footer>
+      </div>
+    </header>
+
+    <!-- 3) Большая текстовая секция "story / manifesto" (блок №1 под hero) -->
+    <section id="about" class="story" role="region" aria-label="О проекте">
+      <div class="container">
+        <article class="story-card">
+          <h2 class="story-title">Мы создаём интерфейсы, которые продают</h2>
+
+          <!-- Продающий текст — живой. Затем идёт наполнение для визуального объёма. -->
+          <p class="story-lead">
+            Наш подход сочетает в себе дизайн и стратегию: мы проектируем не просто страницы — мы проектируем
+            опыт, который конвертирует посетителей в клиентов. Этот шаблон разработан так, чтобы сразу производить
+            впечатление: мягкое стекло, аккуратные акценты и плавная анимация создают ощущение дорогого современного
+            продукта и доверия.
+          </p>
+
+          <p class="story-body">
+            Мы фокусируемся на трёх ключевых принципах, которые делают интерфейс действительно эффективным:
+          </p>
+
+          <ol class="story-list">
+            <li><strong>Понятная иерархия.</strong> Заголовки, подписи и кнопки — всё располагается так, чтобы
+              пользователь моментально понимал, куда смотреть и что делать.</li>
+            <li><strong>Баланс визуального акцента.</strong> Плавное движение и световые акценты подчеркивают важное,
+              не отвлекая от основной цели — покупки или заказа услуги.</li>
+            <li><strong>Производительность.</strong> Красивая графика и анимации — не жертва скорости. Мы используем
+              аппаратное ускорение, минимальную нагрузку на рендер и адаптивные настройки для мобильных устройств.</li>
+          </ol>
+
+          <!-- Дополнительный информационный блок (long form content, lorem-подполнение) -->
+          <div class="story-extra">
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae urna vel arcu facilisis
+              ultricies. Integer ac sem sit amet nibh lacinia tristique. Cras non rutrum lectus. Nulla facilisi.
+              Suspendisse potenti. Quisque sagittis, orci at sodales cursus, sem nunc tristique magna, in tempor
+              erat sem ut odio. Sed vulputate, sem at consectetur varius, mauris erat gravida mi, nec interdum
+              lorem orci vitae nunc. Praesent non neque sed magna tristique luctus. Fusce a lorem sed nunc viverra
+              vehicula. Integer eu lectus sed est tristique gravida. Vestibulum ultricies at sapien in posuere.
+            </p>
+
+            <p>
+              In hac habitasse platea dictumst. Etiam ac mauris sed arcu congue malesuada. Sed tempor, ligula at
+              vestibulum dapibus, mauris risus tempor turpis, sit amet faucibus elit orci non augue. Pellentesque
+              habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc ut magna nec
+              odio malesuada cursus. Aenean vel augue vitae augue sodales dictum. Aliquam erat volutpat. Integer
+              imperdiet pulvinar tortor, sed vulputate massa volutpat ut. Donec in efficitur purus.
+            </p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 4) Блок карточек фич / преимуществ (3 карточки) -->
+    <section id="features" class="features" role="region" aria-label="Фичи и преимущества">
+      <div class="container">
+        <h2 class="features-heading">Основные преимущества</h2>
+
+        <p class="features-sub">
+          Трёхколоночный блок с функциональными карточками. Каждый элемент оформлен в стиле glass + мягкий glow,
+          чтобы сохранить визуальную целостность с верхней карточкой.
+        </p>
+
+        <div class="cards">
+          <!-- Карточка 1 -->
+          <article class="card" tabindex="0" role="article" aria-labelledby="card1-title">
+            <div class="card-icon" aria-hidden="true">⚡</div>
+            <h3 id="card1-title" class="card-title">Мгновенная кастомизация</h3>
+            <p class="card-desc">
+              Настройка шрифтов, цветов, расположения блоков и интерактивных элементов — всё делается быстро.
+              Поддержка переменных CSS, наборов тем и подробной документации позволяет изменить шаблон под бренд
+              за считанные минуты.
+            </p>
+
+            <p class="card-more">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec varius nisl, vitae gravida odio.
+              Maecenas consequat, dolor sit amet porttitor gravida, erat magna aliquet nibh, sed efficitur lectus
+              urna vitae nisl. Etiam imperdiet nibh non velit volutpat, quis tempor est feugiat.
+            </p>
+
+            <a class="card-cta" href="#pricing" aria-label="Узнать про цены">Узнать больше →</a>
+          </article>
+
+          <!-- Карточка 2 -->
+          <article class="card" tabindex="0" role="article" aria-labelledby="card2-title">
+            <div class="card-icon" aria-hidden="true">🛡️</div>
+            <h3 id="card2-title" class="card-title">Оптимизировано для продаж</h3>
+            <p class="card-desc">
+              Сконструировано под конверсию: ясные CTA, адаптивные формы и оптимальная типографика обеспечивают
+              лучшую читабельность и вовлечение. Все элементы ориентированы на конверсию посетителей в клиентов.
+            </p>
+
+            <p class="card-more">
+              Nullam finibus, nibh sed fermentum posuere, risus odio consequat quam, ac fermentum nisl urna nec
+              turpis. Curabitur pulvinar tempus varius. Suspendisse potenti. Vivamus eget magna quis lorem
+              venenatis consectetur.
+            </p>
+
+            <a class="card-cta" href="#contacts" aria-label="Связаться с нами">Связаться →</a>
+          </article>
+
+          <!-- Карточка 3 -->
+          <article class="card" tabindex="0" role="article" aria-labelledby="card3-title">
+            <div class="card-icon" aria-hidden="true">⚙️</div>
+            <h3 id="card3-title" class="card-title">Лёгкая интеграция</h3>
+            <p class="card-desc">
+              Поддержка статических сайтов и популярных фреймворков. Простая интеграция с аналитикой, формами и
+              платежными системами. Подробная инструкция по деплою и кастомизации в комплекте.
+            </p>
+
+            <p class="card-more">
+              Aliquam id hendrerit odio, sed hendrerit sapien. Integer cursus magna at lacinia faucibus. Donec
+              convallis turpis eu consequat tempor. Etiam vel dui vulputate, vulputate mi id, tristique lorem.
+            </p>
+
+            <a class="card-cta" href="#contacts" aria-label="Получить демо">Получить демо →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5) Placeholder для прокрутки / футер -->
+    <footer id="contacts" class="footer" role="contentinfo" aria-label="Контакты и футер">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-block">
+            <h4>Contact</h4>
+            <p>aneshaxx@gmail.com</p>
+            <p>+380 985 20 28 38</p>
+          </div>
+          <div class="footer-block">
+            <h4>About</h4>
+            <p>Наш продукт — это набор компонентов, который поможет вам быстро запустить продающий сайт.</p>
+          </div>
+          <div class="footer-block">
+            <h4>Subscribe</h4>
+            <form class="subscribe" action="#" onsubmit="event.preventDefault(); alert('Subscribed (demo)');">
+              <label for="email" class="sr-only">Email</label>
+              <input id="email" class="subscribe-input" type="email" placeholder="your@email.com" required />
+              <button class="btn small" type="submit">Subscribe</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="copyright">
+          © <span id="year"></span> MODERN. All rights reserved. Template built with glassmorphism, care and attention.
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Подключаем скрипт -->
+  <script src="script.js" defer></script>
+  <style>
+  body {
+    opacity: 0;
+    filter: blur(20px);
+    transition: opacity 1.2s ease, filter 1.2s ease;
+  }
+  body.fade-in {
+    opacity: 1;
+    filter: blur(0);
+  }
+</style>
+
+<script>
+  window.addEventListener('load', () => {
+    requestAnimationFrame(() => {
+      document.body.classList.add('fade-in');
+    });
+  });
+</script>
+
+<!-- INSTAGRAM — фиксировано в левом верхнем углу -->
+<a href="https://instagram.com/your" target="_blank" aria-label="Instagram" class="insta-fixed">
+  <svg viewBox="0 0 24 24" fill="white" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.75-2a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z"/>
+  </svg>
+</a>
+
+<style>
+.insta-fixed{
+  position:fixed;
+  top:18px;
+  left:18px;
+  z-index:9999;
+  opacity:.85;
+  transition:.3s;
+}
+.insta-fixed:hover{
+  opacity:1;
+  transform:scale(1.08);
+}
+</style>
+
+<!-- INSTAGRAM — fixed top-left -->
+<a href="https://instagram.com/your" target="_blank" aria-label="Open Instagram" class="insta-fixed">
+  <svg viewBox="0 0 24 24" fill="white" width="24" height="24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.75-2a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z"/>
+  </svg>
+</a>
+
+<style>
+.insta-fixed{
+  position:fixed;
+  top:18px;
+  left:18px;
+  z-index:9999;
+  opacity:.85;
+  transition:.3s;
+}
+.insta-fixed:hover{
+  opacity:1;
+  transform:scale(1.08);
+}
+</style>
+<script>
+  // К О П И Я генератора blobs — те же параметры, только старт ниже
+  const extraBlobsCount = 8; // сколько ещё шариков ниже
+  const blobs2 = document.createElement('div');
+  blobs2.style.position = 'fixed';
+  blobs2.style.left = 0;
+  blobs2.style.top = 0;
+  blobs2.style.width = '100%';
+  blobs2.style.height = '100%';
+  blobs2.style.pointerEvents = 'none';
+  blobs2.style.zIndex = '-1';
+  document.body.appendChild(blobs2);
+
+  for (let i = 0; i < extraBlobsCount; i++) {
+    const b = document.createElement('div');
+    b.className = 'blob';
+    const size = Math.random() * 350 + 250;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    b.style.position = 'absolute';
+    b.style.borderRadius = '50%';
+    b.style.filter = 'blur(90px)';
+    b.style.opacity = 0.45;
+    b.style.background = 'radial-gradient(circle, rgba(255,255,255,.8), rgba(255,192,203,.3))';
+    b.style.left = Math.random() * 100 + '%';
+
+    // ключ — ставим их внизу страницы
+    b.style.top = (window.innerHeight + Math.random() * 3000) + 'px';
+    blobs2.appendChild(b);
+
+    const dur = 20 + Math.random() * 18;
+    b.animate(
+      [{ transform: 'translateY(-60px)' }, { transform: 'translateY(60px)' }],
+      { duration: dur * 1000, direction: 'alternate', iterations: Infinity, easing: 'ease-in-out' }
+    );
+  }
+</script>
+<header class="hero" role="banner" aria-label="Главный экран">
+  <div class="glass-card" role="region" aria-label="Карточка героя">
+    <!-- Topbar -->
+    <nav class="topbar" role="navigation" aria-label="Главное меню">
+      <div class="logo" aria-hidden="true">MODERN<span class="logo-dot">.</span></div>
+
+      <ul class="nav" role="menubar" aria-hidden="false">
+        <li role="none"><a role="menuitem" href="#features">Features</a></li>
+        <li role="none"><a role="menuitem" href="#about">About</a></li>
+        <li role="none"><a role="menuitem" href="#contacts">Contacts</a></li>
+        <li role="none"><a role="menuitem" href="#pricing">Pricing</a></li>
+      </ul>
+
+      <button class="burger" aria-label="Открыть меню" aria-expanded="false">
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+        <span class="burger-line"></span>
+      </button>
+    </nav>
+
+    <!-- Hero content -->
+    <main class="hero-main">
+      <h1 class="title">Modern Web Template</h1>
+
+      <p class="subtitle">
+        A premium-grade web template built with refined glassmorphism,
+        subtle kinetic motion and floating optical accents.  
+        Designed for creators who sell — it projects value, confidence
+        and an immediate sense of a carefully engineered digital product.
+      </p>
+
+      <div class="actions">
+        <button class="btn primary" id="buyBtn">Get the Template</button>
+        <button class="btn ghost" id="previewBtn">Preview</button>
+      </div>
+
+      <p class="hero-note">
+        Fully responsive, performance-oriented and ready to scale across
+        multi-page environments. Smooth integration with CMS and static
+        builders. Click “Preview” to see extended depths of the layout.
+      </p>
+    </main>
+
+    <footer class="meta" aria-hidden="false">
+      <div class="meta-item">Responsive · Retina-ready</div>
+      <div class="meta-item">SEO-friendly · Easy to customize</div>
+      <div class="meta-item">Includes animations & accessibility</div>
+<section id="pricing" class="pricing">
+  <div class="container">
+    <h2 class="pricing-title">Цены</h2>
+    <p class="pricing-sub">Выберите подходящий вариант</p>
+
+    <div class="pricing-cards">
+
+      <div class="p-card">
+        <h3>Простой сайт</h3>
+        <p class="p-desc">Без эффектов, базовая верстка</p>
+        <div class="p-price">$20</div>
+      </div>
+
+      <div class="p-card">
+        <h3>Средний сайт</h3>
+        <p class="p-desc">С лёгкими эффектами и анимациями</p>
+        <div class="p-price">$30</div>
+      </div>
+
+      <div class="p-card best">
+        <h3>Полный сайт</h3>
+        <p class="p-desc">Эффекты · плавности · современный стиль</p>
+        <div class="p-price">$60</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+    </footer>
+  </div>
+</header>
+<section id="about" class="story" role="region" aria-label="О проекте">
+  <div class="container">
+    <article class="story-card">
+      <h2 class="story-title">We craft interfaces that sell</h2>
+
+      <p class="story-lead">
+        Our approach fuses aesthetics with intention: we do not design “pages” — we design an experience engineered
+        to convert a visitor into a client. This template was built to instantly impress: refined glass layers,
+        calibrated accents and controlled motion create the visual trust and perceived value of a high-end product.
+      </p>
+
+      <p class="story-body">
+        We are guided by three core principles that make an interface commercially effective:
+      </p>
+
+      <ol class="story-list">
+        <li><strong>Hierarchies with intent.</strong> Headlines, micro-labels and CTAs are engineered so the user
+          understands what to look at and what to do — instantly.</li>
+
+        <li><strong>Balanced visual authority.</strong> Subtle motion and light accents reinforce what matters,
+          without disturbing the primary conversion path.</li>
+
+        <li><strong>Performance discipline.</strong> Aesthetic weight is never paid with latency. Hardware-accelerated
+          motion, minimal paint pressure and adaptive tuning for mobile deliver speed without downgrading elegance.</li>
+      </ol>
+
+      <div class="story-extra">
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum vitae urna vel arcu facilisis
+          ultricies. Integer ac sem sit amet nibh lacinia tristique. Cras non rutrum lectus. Nulla facilisi.
+          Suspendisse potenti. Quisque sagittis, orci at sodales cursus, sem nunc tristique magna, in tempor
+          erat sem ut odio. Sed vulputate, sem at consectetur varius, mauris erat gravida mi, nec interdum
+          lorem orci vitae nunc. Praesent non neque sed magna tristique luctus. Fusce a lorem sed nunc viverra
+          vehicula. Integer eu lectus sed est tristique gravida. Vestibulum ultricies at sapien in posuere.
+        </p>
+
+        <p>
+          In hac habitasse platea dictumst. Etiam ac mauris sed arcu congue malesuada. Sed tempor, ligula at
+          vestibulum dapibus, mauris risus tempor turpis, sit amet faucibus elit orci non augue. Pellentesque
+          habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc ut magna nec
+          odio malesuada cursus. Aenean vel augue vitae augue sodales dictum. Aliquam erat volutpat. Integer
+          imperdiet pulvinar tortor, sed vulputate massa volutpat ut. Donec in efficitur purus.
+        </p>
+      </div>
+    </article>
+  </div>
+</section>
+<section id="features" class="features" role="region" aria-label="Фичи и преимущества">
+  <div class="container">
+    <h2 class="features-heading">Core Advantages</h2>
+
+    <p class="features-sub">
+      A three-column feature block with glass cards and a soft glow, visually consistent with the hero-card above.
+      Each card communicates a real commercial benefit — engineered for a product-driven landing.
+    </p>
+
+    <div class="cards">
+
+      <!-- Card 1 -->
+      <article class="card" tabindex="0" role="article" aria-labelledby="card1-title">
+        <div class="card-icon" aria-hidden="true">⚡</div>
+        <h3 id="card1-title" class="card-title">Instant customization</h3>
+
+        <p class="card-desc">
+          Tune typography, palette, layout and interactions in minutes. CSS variables, theme sets and detailed
+          docs allow you to align this template with a brand identity without touching the core structure.
+        </p>
+
+        <p class="card-more">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec varius nisl, vitae gravida odio.
+          Maecenas consequat, dolor sit amet porttitor gravida, erat magna aliquet nibh, sed efficitur lectus
+          urna vitae nisl. Etiam imperdiet nibh non velit volutpat, quis tempor est feugiat.
+        </p>
+
+        <a class="card-cta" href="#pricing" aria-label="Learn about pricing">Learn more →</a>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card" tabindex="0" role="article" aria-labelledby="card2-title">
+        <div class="card-icon" aria-hidden="true">🛡️</div>
+        <h3 id="card2-title" class="card-title">Conversion-oriented</h3>
+
+        <p class="card-desc">
+          Built for selling: clear CTAs, adaptive forms and calibrated typography maximize comprehension
+          and engagement. Every element reinforces the goal — converting traffic into paying clients.
+        </p>
+
+        <p class="card-more">
+          Nullam finibus, nibh sed fermentum posuere, risus odio consequat quam, ac fermentum nisl urna nec
+          turpis. Curabitur pulvinar tempus varius. Suspendisse potenti. Vivamus eget magna quis lorem
+          venenatis consectetur.
+        </p>
+
+        <a class="card-cta" href="#contacts" aria-label="Contact us">Contact →</a>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="card" tabindex="0" role="article" aria-labelledby="card3-title">
+        <div class="card-icon" aria-hidden="true">⚙️</div>
+        <h3 id="card3-title" class="card-title">Easy integration</h3>
+
+        <p class="card-desc">
+          Compatible with static sites and modern frameworks. Simple integration with analytics,
+          forms and payment stacks. Step-by-step deployment and customization guide included.
+        </p>
+
+        <p class="card-more">
+          Aliquam id hendrerit odio, sed hendrerit sapien. Integer cursus magna at lacinia faucibus. Donec
+          convallis turpis eu consequat tempor. Etiam vel dui vulputate, vulputate mi id, tristique lorem.
+        </p>
+
+        <a class="card-cta" href="#contacts" aria-label="Get a demo">Request demo →</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+<footer id="footer" class="footer" role="contentinfo" aria-label="Site footer">
+  <div class="container footer-container">
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const blobs = Array.from(document.querySelectorAll('*'))
+    .filter(el => {
+      const s = getComputedStyle(el);
+      return (
+        s.filter.includes('blur') || 
+        s.backdropFilter !== 'none' ||
+        s.background.includes('radial-gradient')
+      );
+    });
+
+  blobs.forEach(blob => {
+    const moveDuration = 2 + Math.random() * 2;  // быстрое движение
+    const rotateDuration = 2 + Math.random() * 3000; // чуть дольше, чтобы красиво
+
+    const x = (Math.random() - 200) * 140;
+    const y = (Math.random() - 2) * 140;
+
+    // движение
+    blob.animate(
+      [
+        { transform: 'translate(0px,0px)' },
+        { transform: `translate(${x}px, ${y}px)` }
+      ],
+      {
+        duration: moveDuration,
+        easing: 'ease-in-out',
+        direction: 'alternate',
+        iterations: Infinity
+      }
+    );
+
+    // вращение
+    blob.animate(
+      [
+        { transform: 'rotate(0deg)' },
+        { transform: 'rotate(360deg)' }
+      ],
+      {
+        duration: rotateDuration,
+        easing: 'linear',
+        iterations: Infinity
+      }
+    );
+  });
+});
+</script>
